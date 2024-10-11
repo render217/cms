@@ -1,6 +1,6 @@
 import { RawRuleOf } from "@casl/ability";
 import { createPrismaAbility } from "@casl/prisma";
-import { DocumentType, UserStatus } from "@prisma/client";
+import { DocumentType, ProjectType, UserStatus } from "@prisma/client";
 import { AppAbility } from "./abilitites";
 
 // Extend the RawRuleOf type to include permissionName
@@ -9,6 +9,11 @@ interface ExtendedRule extends RawRuleOf<AppAbility> {
 }
 
 const articleResourceRules: ExtendedRule[] = [
+    {
+        permissionName: "manage_article",
+        action: "manage",
+        subject: "Article",
+    },
     {
         permissionName: "create_article",
         action: "create",
@@ -29,7 +34,14 @@ const articleResourceRules: ExtendedRule[] = [
         action: "delete",
         subject: "Article",
     },
-
+    {
+        permissionName: "manage_own_article",
+        action: "manage",
+        subject: "Article",
+        conditions: {
+            authorId: "${user.id}",
+        },
+    },
     {
         permissionName: "read_own_article",
         action: "read",
@@ -56,6 +68,14 @@ const articleResourceRules: ExtendedRule[] = [
     },
 ];
 const documentResourceRules: ExtendedRule[] = [
+    {
+        permissionName: "manage_article",
+        action: "manage",
+        subject: "Document",
+        conditions: {
+            authorId: "${user.id}",
+        },
+    },
     // CREATE_DOCUMENT
     {
         permissionName: "create_document",
@@ -113,6 +133,14 @@ const documentResourceRules: ExtendedRule[] = [
     },
     // READ_UPDATE_DELETE_OWN_DOCUMENT
     {
+        permissionName: "manage_own_article",
+        action: "manage",
+        subject: "Document",
+        conditions: {
+            authorId: "${user.id}",
+        },
+    },
+    {
         permissionName: "read_own_document",
         action: "read",
         subject: "Document",
@@ -139,6 +167,11 @@ const documentResourceRules: ExtendedRule[] = [
 ];
 const projectResourceRules: ExtendedRule[] = [
     {
+        permissionName: "manage_project",
+        action: "manage",
+        subject: "Project",
+    },
+    {
         permissionName: "create_project",
         action: "create",
         subject: "Project",
@@ -158,7 +191,30 @@ const projectResourceRules: ExtendedRule[] = [
         action: "delete",
         subject: "Project",
     },
-
+    {
+        permissionName: "read_frontend_project",
+        action: "read",
+        subject: "Project",
+        conditions: {
+            type: ProjectType.FRONTEND,
+        },
+    },
+    {
+        permissionName: "read_frontend_project",
+        action: "read",
+        subject: "Project",
+        conditions: {
+            type: ProjectType.BACKEND,
+        },
+    },
+    {
+        permissionName: "manage_project",
+        action: "manage",
+        subject: "Project",
+        conditions: {
+            authorId: "${user.id}",
+        },
+    },
     {
         permissionName: "read_own_project",
         action: "read",
@@ -186,6 +242,11 @@ const projectResourceRules: ExtendedRule[] = [
 ];
 const userResourceRules: ExtendedRule[] = [
     // create-read-update(status.)-delete-user
+    {
+        permissionName: "manage_user",
+        action: "manage",
+        subject: "User",
+    },
     {
         permissionName: "create_user",
         action: "create",
