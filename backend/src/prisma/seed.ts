@@ -3,8 +3,8 @@ import { db } from "./db";
 import { all_rules } from "../config/all_rules";
 import bcrypt from "bcrypt";
 async function DropAllTables() {
-    const users = db.user.deleteMany({});
     const usersPermission = db.userPermission.deleteMany({});
+    const users = db.user.deleteMany({});
     const permissions = db.permission.deleteMany({});
     const documents = db.document.deleteMany({});
     const articles = db.article.deleteMany({});
@@ -108,7 +108,7 @@ async function SeedUserPermissions() {
 }
 
 async function SeedData() {
-    // await DropAllTables();
+    await DropAllTables();
     await SeedPermissions();
     await SeedUsers();
     await SeedUserPermissions();
