@@ -4,3 +4,4 @@ export { default as createUser } from "./create-user";
 export { default as deleteUser } from "./delete-user";
 export { default as updateUser } from "./update-user";
 export { default as updateUserStatus } from "./update-user-status";
+export { default as getMe } from "./get-me";

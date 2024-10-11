@@ -1,14 +1,16 @@
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import ApiError from "../../utils/api-error";
 import { db } from "../../prisma/db";
 import bcrypt from "bcrypt";
 const updateUser = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    // const { id } = req.params;
+    const user = req.user!;
+    const id = user.id;
     const { oldPassword, newPassword } = req.body;
 
-    if (!id) {
-        throw new ApiError(400, "User id is required");
-    }
+    // if (!id) {
+    //     throw new ApiError(400, "User id is required");
+    // }
 
     if (!oldPassword || !newPassword) {
         throw new ApiError(400, "All fields are required");

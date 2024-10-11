@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
 const getMe = async (req: Request, res: Response) => {
-    res.send("getMe");
+    res.status(200).json(req.user!);
 };
 export default getMe;
