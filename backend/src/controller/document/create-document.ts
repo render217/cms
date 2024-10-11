@@ -1,5 +1,31 @@
 import type { Request, Response } from "express";
+import ApiError from "../../utils/api-error";
+import { db } from "../../prisma/db";
+import { DocumentType } from "@prisma/client";
 const createDocument = async (req: Request, res: Response) => {
-    res.send("createDocument");
+    const user = req.user!;
+    const { title, type } = req.body;
+    if (!title || !type) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    if (
+        type !== DocumentType.INTERNAL &&
+        type !== DocumentType.CONFIDENTIAL &&
+        type !== DocumentType.PUBLIC &&
+        type !== DocumentType.SECRET
+    ) {
+        throw new ApiError(400, "Invalid document type");
+    }
+
+    const newDocument = await db.document.create({
+        data: {
+            title: title,
+            type: type,
+            authorId: user.id,
+        },
+    });
+
+    res.json(newDocument);
 };
 export default createDocument;

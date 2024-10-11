@@ -1,6 +1,9 @@
 import { Router } from "express";
 import * as documentController from "../controller/document";
+import checkAuth from "../middleware/check-auth";
 const documentRouter = Router();
+
+documentRouter.use(checkAuth);
 
 documentRouter.get("/", documentController.getDocuments);
 documentRouter.post("/", documentController.createDocument);
