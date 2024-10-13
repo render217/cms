@@ -1,30 +1,41 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AuthLayout from "@/layout/auth-layout";
-import RootLayout from "@/layout/root-layout";
-import { SignIn, SignUp } from "./pages/(auth)";
-import Resources from "./pages/(root)/Resources";
-import Profile from "./pages/(root)/Profile";
-import UsersManagment from "./pages/(root)/UsersManagement";
-import Experiment from "./pages/(root)/Experiment";
-import NotFound from "./pages/(root)/NotFound";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "react-toastify/dist/ReactToastify.css";
+import AllRoutes from "./routes";
+import AuthProvider from "./context/auth-context";
+import { ToastContainer } from "react-toastify";
+import queryClient from "./services/queryClient";
+import AbilityProvider from "./context/ability-context";
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<AuthLayout />}>
-                    <Route path="sign-in" element={<SignIn />} />
-                    <Route path="sign-up" element={<SignUp />} />
-                </Route>
-                <Route element={<RootLayout />}>
-                    <Route index element={<Resources />} />
-                    <Route path="resources" element={<Resources />} />
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="users" element={<UsersManagment />} />
-                    <Route path="experiment" element={<Experiment />} />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <AbilityProvider>
+                        <AllRoutes />
+                        <ToastProvider />
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </AbilityProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+        </>
+    );
+}
+
+function ToastProvider() {
+    return (
+        <>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable
+                pauseOnHover
+            />
+        </>
     );
 }

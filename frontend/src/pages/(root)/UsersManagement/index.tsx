@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import CreateUser from "./components/create-user";
+import UserTable from "./components/user-table";
 export default function UsersManagment() {
     return (
         <Box
             sx={{
-                p: "10px",
+                p: "20px",
             }}>
-            <Box>
-                <Typography>Users</Typography>
-            </Box>
+            <CreateUser />
+            <UserTable />
         </Box>
     );
 }

@@ -15,6 +15,13 @@ const login = async (req: Request, res: Response) => {
         where: {
             email: email,
         },
+        include: {
+            permissions: {
+                include: {
+                    permission: true,
+                },
+            },
+        },
     });
 
     if (!user) {
@@ -30,8 +37,11 @@ const login = async (req: Request, res: Response) => {
     const token = jsonwebtoken.sign({ id: user.id }, process.env.JWT_SECRET!);
 
     res.status(200).json({
-        user,
-        token,
+        payload: {
+            user,
+            token,
+        },
+        message: "Successfully logged in",
     });
 };
 export default login;

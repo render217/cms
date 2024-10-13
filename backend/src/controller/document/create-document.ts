@@ -2,8 +2,11 @@ import type { Request, Response } from "express";
 import ApiError from "../../utils/api-error";
 import { db } from "../../prisma/db";
 import { DocumentType } from "@prisma/client";
+import { ForbiddenError } from "@casl/ability";
 const createDocument = async (req: Request, res: Response) => {
     const user = req.user!;
+    const ability = req.abilities!;
+    ForbiddenError.from(ability).throwUnlessCan("create", "Document");
     const { title, type } = req.body;
     if (!title || !type) {
         throw new ApiError(400, "All fields are required");
@@ -26,6 +29,6 @@ const createDocument = async (req: Request, res: Response) => {
         },
     });
 
-    res.json(newDocument);
+    res.json({ payload: newDocument, message: "successfully create document" });
 };
 export default createDocument;

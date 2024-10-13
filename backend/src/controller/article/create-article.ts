@@ -14,6 +14,6 @@ const createArticle = async (req: Request, res: Response) => {
             authorId: user.id,
         },
     });
-    res.send(article);
+    res.send({ payload: article, message: "successfully create article" });
 };
 export default createArticle;

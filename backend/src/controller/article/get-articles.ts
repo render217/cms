@@ -5,7 +5,10 @@ const getArticles = async (req: Request, res: Response) => {
         orderBy: {
             createdAt: "desc",
         },
+        include: {
+            author: true,
+        },
     });
-    res.send(articles);
+    res.send({ payload: articles });
 };
 export default getArticles;

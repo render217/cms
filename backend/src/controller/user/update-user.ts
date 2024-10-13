@@ -47,9 +47,10 @@ const updateUser = async (req: Request, res: Response) => {
         },
         data: {
             password: hashedPassword,
+            isFirstLogin: false,
         },
     });
 
-    res.status(200).json({ message: "successfully updated" });
+    res.status(200).json({ payload: {}, message: "password updated" });
 };
 export default updateUser;

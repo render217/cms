@@ -1,8 +1,10 @@
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
+import useSideBarToggle from "@/hooks/use-sidebar-toggle";
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 export default function RootLayout() {
+    useSideBarToggle();
     return (
         <>
             {/* Wrapper */}

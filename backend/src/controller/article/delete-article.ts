@@ -24,6 +24,6 @@ const deleteArticle = async (req: Request, res: Response) => {
         },
     });
 
-    res.status(200).json({ message: "successfully deleted" });
+    res.status(200).json({ payload: null, message: "successfully deleted" });
 };
 export default deleteArticle;

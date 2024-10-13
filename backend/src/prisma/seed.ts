@@ -25,6 +25,8 @@ async function SeedPermissions() {
         return db.permission.create({
             data: {
                 permissionName: rule.permissionName,
+                scope: rule.scope,
+                description: rule.description,
                 action: rule.action.toString(),
                 subject: rule.subject.toString(),
                 conditions: JSON.stringify(rule.conditions),

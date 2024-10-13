@@ -17,6 +17,6 @@ const getSingleProject = async (req: Request, res: Response) => {
         throw new ApiError(400, "Project not found");
     }
 
-    res.status(200).json(project);
+    res.status(200).json({ payload: project });
 };
 export default getSingleProject;

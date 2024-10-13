@@ -79,7 +79,10 @@ const revokePermission = async (req: Request, res: Response) => {
         },
     });
 
-    res.status(200).json({ message: "Successfully revoked permissions" });
+    res.status(200).json({
+        payload: null,
+        message: "Successfully revoked permissions",
+    });
 };
 
 export default revokePermission;

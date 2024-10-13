@@ -43,6 +43,8 @@ model UserPermission {
 model Permission {
   id              String           @id @default(uuid())
   permissionName  String
+  scope           String
+  description     String
   action          String
   subject         String
   fields          String[]         @default([])

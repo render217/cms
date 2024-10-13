@@ -18,6 +18,6 @@ const getSingleDocument = async (req: Request, res: Response) => {
         throw new ApiError(404, "Document not found");
     }
 
-    res.status(200).json(document);
+    res.status(200).json({ payload: document });
 };
 export default getSingleDocument;

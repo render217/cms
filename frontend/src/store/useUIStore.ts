@@ -5,10 +5,11 @@ interface UIState {
     collapsed: boolean;
     toggled: boolean;
     broken: boolean;
-    setMinScreen: (val: boolean) => void;
+
     setCollapsed: (val: boolean) => void;
     setToggled: (val: boolean) => void;
     setBroken: (val: boolean) => void;
+    setMinScreen: (val: boolean) => void;
 }
 
 const useUIStore = create<UIState>((set) => ({

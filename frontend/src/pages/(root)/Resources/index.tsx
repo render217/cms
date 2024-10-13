@@ -1,13 +1,15 @@
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState } from "react";
-import Users from "./components/users";
+import Projects from "./components/projects";
 import Articles from "./components/articles";
 import Documents from "./components/documents";
+import { useAppAbility } from "@/context/ability-context";
 export default function Resources() {
-    const canViewUsers = true;
-    const canViewArticles = true;
-    const canViewDocuments = true;
+    const ability = useAppAbility();
+    const canViewUsers = ability.can("read", "User");
+    const canViewArticles = ability.can("read", "Article");
+    const canViewDocuments = ability.can("read", "Document");
 
     const initialValue = () => {
         if (canViewUsers) return "1";
@@ -31,7 +33,7 @@ export default function Resources() {
     return (
         <Box
             sx={{
-                p: "10px",
+                p: "5px",
             }}>
             <Box
                 sx={{
@@ -42,7 +44,7 @@ export default function Resources() {
                         <TabList
                             aria-label="resource-tabs"
                             onChange={handleTabChange}>
-                            {canViewUsers && <Tab label="Users" value="1" />}
+                            {canViewUsers && <Tab label="Projects" value="1" />}
                             {canViewArticles && (
                                 <Tab label="Articles" value="2" />
                             )}
@@ -53,7 +55,7 @@ export default function Resources() {
                     </Box>
                     {canViewUsers && (
                         <TabPanel value="1">
-                            <Users />
+                            <Projects />
                         </TabPanel>
                     )}
                     {canViewArticles && (

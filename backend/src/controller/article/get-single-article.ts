@@ -18,6 +18,6 @@ const getSingleArticle = async (req: Request, res: Response) => {
         throw new ApiError(404, "Article not found");
     }
 
-    res.send(article);
+    res.send({ payload: article });
 };
 export default getSingleArticle;

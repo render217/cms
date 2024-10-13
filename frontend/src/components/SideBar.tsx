@@ -8,19 +8,27 @@ import { Divider, Typography } from "@mui/material";
 import useUIStore from "@/store/useUIStore";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "@/context/auth-context";
+import { Can } from "@/context/ability-context";
 export default function SideBar() {
     const { toggled, collapsed, setToggled } = useUIStore();
-
+    const { logOutUser } = useAuth();
     const location = useLocation();
     const [activeMenuItem, setActiveMenuItem] = useState(location.pathname);
     const handleMenuItemClick = (path: string) => {
         setActiveMenuItem(path);
         setToggled(false);
     };
+
+    const handleLogout = () => {
+        logOutUser();
+    };
+
     return (
         <Sidebar
             toggled={toggled}
             collapsed={collapsed}
+            // breakPoint="xs"
             onBackdropClick={() => setToggled(false)}
             style={{
                 height: "100vh",
@@ -73,14 +81,15 @@ export default function SideBar() {
                         marginBottom: "25px",
                     }}
                 />
-                <MenuItem
-                    active={activeMenuItem === "/users"}
-                    component={<Link to="/users" />}
-                    icon={<PeopleOutlinedIcon />}
-                    onClick={() => handleMenuItemClick("/users")}>
-                    <Typography>User Managment</Typography>
-                </MenuItem>
-
+                <Can I="manage" a="User">
+                    <MenuItem
+                        active={activeMenuItem === "/users"}
+                        component={<Link to="/users" />}
+                        icon={<PeopleOutlinedIcon />}
+                        onClick={() => handleMenuItemClick("/users")}>
+                        <Typography>User Managment</Typography>
+                    </MenuItem>
+                </Can>
                 <MenuItem
                     active={activeMenuItem === "/"}
                     icon={<FolderOutlinedIcon />}
@@ -98,6 +107,7 @@ export default function SideBar() {
                 </MenuItem>
 
                 <MenuItem
+                    onClick={handleLogout}
                     rootStyles={{
                         position: "absolute",
                         bottom: "20px",

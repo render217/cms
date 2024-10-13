@@ -34,6 +34,9 @@ const getUpdateArticle = async (req: Request, res: Response) => {
         },
     });
 
-    res.status(200).json(updatedArticle);
+    res.status(200).json({
+        payload: updatedArticle,
+        message: "successfully updated article",
+    });
 };
 export default getUpdateArticle;

@@ -2,8 +2,15 @@ import type { Request, Response } from "express";
 import ApiError from "../../utils/api-error";
 import { db } from "../../prisma/db";
 import { ProjectType } from "@prisma/client";
+import { ForbiddenError } from "@casl/ability";
 const createProject = async (req: Request, res: Response) => {
     const user = req.user!;
+
+    const ability = req.abilities!;
+    ForbiddenError.from(ability)
+        .setMessage("Access Deined")
+        .throwUnlessCan("create", "Project");
+
     const { name, description, type } = req.body;
 
     if (!name || !description || !type) {
@@ -48,6 +55,6 @@ const createProject = async (req: Request, res: Response) => {
         },
     });
 
-    res.send(newProject);
+    res.send({ payload: newProject, message: "successfully create project" });
 };
 export default createProject;

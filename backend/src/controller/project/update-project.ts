@@ -2,7 +2,10 @@ import type { Request, Response } from "express";
 import ApiError from "../../utils/api-error";
 import { db } from "../../prisma/db";
 import { ProjectType } from "@prisma/client";
+import { ForbiddenError, subject } from "@casl/ability";
 const updateProject = async (req: Request, res: Response) => {
+    const ability = req.abilities!;
+
     const { id } = req.params;
 
     const { name, description, type } = req.body;
@@ -29,6 +32,10 @@ const updateProject = async (req: Request, res: Response) => {
         throw new ApiError(400, "Invalid project type");
     }
 
+    ForbiddenError.from(ability)
+        .setMessage("Access Deined")
+        .throwUnlessCan("update", subject("Project", project));
+
     const updatedProject = await db.project.update({
         where: {
             id: project.id,
@@ -41,6 +48,7 @@ const updateProject = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
+        payload: updatedProject,
         message: "successfully updated",
     });
 };

@@ -3,8 +3,15 @@ import bcrypt from "bcrypt";
 import ApiError from "../../utils/api-error";
 import { db } from "../../prisma/db";
 import { UserStatus } from "@prisma/client";
+import { ForbiddenError } from "@casl/ability";
 const createUser = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
+
+    const ability = req.abilities!;
+    ForbiddenError.from(ability)
+        .setMessage("Access Deined")
+        .throwUnlessCan("create", "User");
+
     if (!username || !email || !password) {
         throw new ApiError(400, "All Fields are required.");
     }
@@ -37,6 +44,6 @@ const createUser = async (req: Request, res: Response) => {
         },
     });
 
-    res.send(user);
+    res.send({ payload: user });
 };
 export default createUser;

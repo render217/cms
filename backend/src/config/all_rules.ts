@@ -6,287 +6,337 @@ import { AppAbility } from "./abilitites";
 // Extend the RawRuleOf type to include permissionName
 interface ExtendedRule extends RawRuleOf<AppAbility> {
     permissionName: string;
+    scope: string;
+    description: string;
 }
 
 const articleResourceRules: ExtendedRule[] = [
     {
-        permissionName: "manage_article",
+        permissionName: "manage all article",
         action: "manage",
         subject: "Article",
+        scope: "manage",
+        description:
+            "Full access to manage all articles (create, read, update, delete)",
     },
     {
-        permissionName: "create_article",
+        permissionName: "create article",
         action: "create",
         subject: "Article",
+        scope: "create",
+        description: "Allows creating a new article",
     },
     {
-        permissionName: "read_all_article",
+        permissionName: "read any article",
         action: "read",
         subject: "Article",
+        scope: "any",
+        description: "Allows reading any articles",
     },
     {
-        permissionName: "update_all_article",
+        permissionName: "update any article",
         action: "update",
         subject: "Article",
+        scope: "any",
+        description: "Allows updating any articles",
     },
     {
-        permissionName: "delete_all_article",
+        permissionName: "delete any article",
         action: "delete",
         subject: "Article",
+        scope: "any",
+        description: "Allows deleting any articles",
     },
     {
-        permissionName: "manage_own_article",
+        permissionName: "manage own article",
         action: "manage",
         subject: "Article",
+        scope: "own",
         conditions: {
             authorId: "${user.id}",
         },
+        description: "Full access to manage all articles you created",
     },
     {
-        permissionName: "read_own_article",
+        permissionName: "read own article",
         action: "read",
         subject: "Article",
+        scope: "own",
         conditions: {
             authorId: "${user.id}",
         },
+        description: "Allows reading articles you created",
     },
     {
-        permissionName: "update_own_article",
+        permissionName: "update own article",
         action: "update",
         subject: "Article",
+        scope: "own",
         conditions: {
             authorId: "${user.id}",
         },
+        description: "Allows updating articles you created",
     },
     {
-        permissionName: "delete_own_article",
+        permissionName: "delete own article",
         action: "delete",
         subject: "Article",
+        scope: "own",
         conditions: {
             authorId: "${user.id}",
         },
+        description: "Allows deleting articles you created",
     },
 ];
 const documentResourceRules: ExtendedRule[] = [
     {
-        permissionName: "manage_article",
+        permissionName: "manage all document",
         action: "manage",
         subject: "Document",
-        conditions: {
-            authorId: "${user.id}",
-        },
+        scope: "manage",
+        description:
+            "Full access to manage all documents (create, read, update, delete).",
     },
-    // CREATE_DOCUMENT
     {
-        permissionName: "create_document",
+        permissionName: "create document",
         action: "create",
         subject: "Document",
+        scope: "create",
+        description: "Permission to create a new document.",
     },
-    // READ_UPDATE_DELETE_ALL_DOCUMENT
     {
-        permissionName: "read_all_document",
+        permissionName: "read any document",
         action: "read",
         subject: "Document",
+        scope: "any",
+        description: "Allows to read any documents.",
     },
     {
-        permissionName: "update_all_document",
+        permissionName: "update any document",
         action: "update",
         subject: "Document",
+        scope: "any",
+        description: "Allows to update any documents.",
     },
     {
-        permissionName: "delete_all_document",
+        permissionName: "delete any document",
         action: "delete",
         subject: "Document",
+        scope: "any",
+        description: "Allows to delete any documents.",
     },
-    // READ_DOCUMENT_BY_TYPE
     {
-        permissionName: "read_public_document",
+        permissionName: "read public doc",
         action: "read",
         subject: "Document",
         conditions: {
             type: DocumentType.PUBLIC,
         },
+        scope: "public",
+        description: "Allows to read public documents only.",
     },
     {
-        permissionName: "read_confidential_document",
+        permissionName: "read confidential doc",
         action: "read",
         subject: "Document",
         conditions: {
             type: DocumentType.CONFIDENTIAL,
         },
+        scope: "confidential",
+        description: "Allows to read confidential documents only.",
     },
     {
-        permissionName: "read_internal_document",
+        permissionName: "read internal doc",
         action: "read",
         subject: "Document",
         conditions: {
             type: DocumentType.INTERNAL,
         },
+        scope: "internal",
+        description: "Allows to read internal documents only.",
     },
     {
-        permissionName: "read_secret_document",
+        permissionName: "read secret doc",
         action: "read",
         subject: "Document",
         conditions: {
             type: DocumentType.SECRET,
         },
+        scope: "secret",
+        description: "Allows to read secret documents only.",
     },
-    // READ_UPDATE_DELETE_OWN_DOCUMENT
     {
-        permissionName: "manage_own_article",
+        permissionName: "manage own article",
         action: "manage",
         subject: "Document",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "manage",
+        description: "Full access to manage all documents you created.",
     },
     {
-        permissionName: "read_own_document",
+        permissionName: "read own doc",
         action: "read",
         subject: "Document",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows to read documents you created.",
     },
     {
-        permissionName: "update_own_document",
+        permissionName: "update own document",
         action: "update",
         subject: "Document",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows to update documents you created.",
     },
     {
-        permissionName: "delete_own_document",
+        permissionName: "delete own document",
         action: "delete",
         subject: "Document",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows to delete documents you created.",
     },
 ];
 const projectResourceRules: ExtendedRule[] = [
     {
-        permissionName: "manage_project",
+        permissionName: "manage all project",
         action: "manage",
         subject: "Project",
+        scope: "manage",
+        description:
+            "Full access to manage all projects (create, read, update, delete).",
     },
     {
-        permissionName: "create_project",
+        permissionName: "create project",
         action: "create",
         subject: "Project",
+        scope: "create",
+        description: "Allows creating a new project.",
     },
     {
-        permissionName: "read_all_project",
+        permissionName: "read any project",
         action: "read",
         subject: "Project",
+        scope: "any",
+        description: "Allows reading any projects.",
     },
     {
-        permissionName: "update_all_project",
+        permissionName: "update any project",
         action: "update",
         subject: "Project",
+        scope: "any",
+        description: "Allows updating any projects.",
     },
     {
-        permissionName: "delete_all_project",
+        permissionName: "delete any project",
         action: "delete",
         subject: "Project",
+        scope: "any",
+        description: "Allows deleting any projects.",
     },
     {
-        permissionName: "read_frontend_project",
+        permissionName: "read frontend project",
         action: "read",
         subject: "Project",
         conditions: {
             type: ProjectType.FRONTEND,
         },
+        scope: "frontend",
+        description: "Allows reading frontend projects.",
     },
     {
-        permissionName: "read_frontend_project",
+        permissionName: "read backend project",
         action: "read",
         subject: "Project",
         conditions: {
             type: ProjectType.BACKEND,
         },
+        scope: "backend",
+        description: "Allows reading backend projects.",
     },
     {
-        permissionName: "manage_project",
+        permissionName: "manage own project",
         action: "manage",
         subject: "Project",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "manage",
+        description: "Full access to manage all projects you created.",
     },
     {
-        permissionName: "read_own_project",
+        permissionName: "read own project",
         action: "read",
         subject: "Project",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows reading projects you created.",
     },
     {
-        permissionName: "update_own_project",
+        permissionName: "update own project",
         action: "update",
         subject: "Project",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows updating projects you created.",
     },
     {
-        permissionName: "delete_own_project",
+        permissionName: "delete own project",
         action: "delete",
         subject: "Project",
         conditions: {
             authorId: "${user.id}",
         },
+        scope: "own",
+        description: "Allows deleting projects you created.",
     },
 ];
 const userResourceRules: ExtendedRule[] = [
     // create-read-update(status.)-delete-user
     {
-        permissionName: "manage_user",
+        permissionName: "manage all user",
         action: "manage",
         subject: "User",
-    },
-    {
-        permissionName: "create_user",
-        action: "create",
-        subject: "User",
-    },
-    {
-        permissionName: "read_user",
-        action: "read",
-        subject: "User",
-    },
-    {
-        permissionName: "update_user",
-        action: "update",
-        subject: "User",
-    },
-    {
-        permissionName: "delete_user",
-        action: "delete",
-        subject: "User",
+        scope: "manage",
+        description:
+            "Full access to manage all users (create, read, update, delete).",
     },
 ];
 const permissionResourceRules: ExtendedRule[] = [
     // manage-permission | involves assign and revoke.
     {
-        permissionName: "manage_permission",
+        permissionName: "manage all permission",
         action: "manage",
         subject: "Permission",
+        scope: "manage",
+        description:
+            "Full access to manage all permissions (read, assign, revoke).",
     },
 ];
-const otherPolicyRules: ExtendedRule[] = [
-    // is-active__User | can perform all action if it is active
-    {
-        permissionName: "is_active_user",
-        action: "is-active",
-        subject: "User",
-        conditions: {
-            status: UserStatus.ACTIVE,
-        },
-    },
-];
+// const otherPolicyRules: ExtendedRule[] = [
+//     // is-active__User | can perform all action if it is active
+//     {
+//         permissionName: "is active user",
+//         action: "is-active",
+//         subject: "User",
+//         conditions: {
+//             status: UserStatus.ACTIVE,
+//         },
+//     },
+// ];
 
 export const all_rules: ExtendedRule[] = [
     ...articleResourceRules,
@@ -294,5 +344,5 @@ export const all_rules: ExtendedRule[] = [
     ...projectResourceRules,
     ...userResourceRules,
     ...permissionResourceRules,
-    ...otherPolicyRules,
+    // ...otherPolicyRules,
 ];

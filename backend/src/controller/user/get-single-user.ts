@@ -14,6 +14,6 @@ const getSingleUser = async (req: Request, res: Response) => {
     if (!user) {
         throw new ApiError(404, "User not found");
     }
-    res.send(user);
+    res.send({ payload: user });
 };
 export default getSingleUser;

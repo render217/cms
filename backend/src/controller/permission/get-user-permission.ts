@@ -27,6 +27,6 @@ const getUserPermission = async (req: Request, res: Response) => {
         },
     });
 
-    res.status(200).json(permission);
+    res.status(200).json({ payload: permission });
 };
 export default getUserPermission;

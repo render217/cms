@@ -1,35 +1,35 @@
 // User type
-export type User = {
+export type IUser = {
     id: string;
     username: string;
     email: string;
-    status: UserStatus;
+    status: UserStatusType;
     isFirstLogin: boolean;
-    createdAt: string; // DateTime in Prisma, converted to ISO string
+    createdAt: string;
     updatedAt: string;
 
-    permissions?: UserPermission[];
+    permissions?: IUserPermission[];
     //
-    articles?: Article[];
-    documents?: Document[];
-    projects?: Project[];
+    articles?: IArticle[];
+    documents?: IDocument[];
+    projects?: IProject[];
 };
 
-export type UserSummary = {
+export type IUserSummary = {
     id: string;
     username: string;
     email: string;
 };
 
 // UserPermission type
-export type UserPermission = {
+export type IUserPermission = {
     permissionId: string;
     userId: string;
-    permission: Permission;
+    permission: IPermission;
 };
 
 // Permission type
-export type Permission = {
+export type IPermission = {
     id: string;
     permissionName: string;
     action: string;
@@ -38,31 +38,71 @@ export type Permission = {
     conditions?: string;
 };
 
+// export type IGroupedPermission = {
+//     subject: string;
+//     permissions: IPermission[];
+// };
+
+interface Scope {
+    id: string;
+    permissionName: string;
+    type: string;
+    description: string;
+    conditions: string | null;
+}
+
+interface Action {
+    manage: {
+        scopes: Scope[];
+    };
+    create: {
+        scopes: Scope[];
+    };
+    read: {
+        scopes: Scope[];
+    };
+    update: {
+        scopes: Scope[];
+    };
+    delete: {
+        scopes: Scope[];
+    };
+}
+
+export type IGroupedPermission = {
+    subject: string;
+    permissions: {
+        actions: Action;
+    }[];
+};
+// export type IGroupedPermission = Permission[];
+
 // Article type
-export type Article = {
+export type IArticle = {
     id: string;
     title: string;
     content: string;
-    author?: UserSummary;
+    author?: IUserSummary;
     createdAt: string; // DateTime as ISO string
     updatedAt: string;
 };
 
 // Document type
-export type Document = {
+export type IDocument = {
     id: string;
     title: string;
     type: DocumentType;
-    author?: UserSummary;
+    author?: IUserSummary;
     createdAt: string;
     updatedAt: string;
 };
 
-export type Project = {
+export type IProject = {
     id: string;
     name: string;
     description: string;
-    author?: UserSummary;
+    type: ProjectType;
+    author?: IUserSummary;
     createdAt: string;
     updatedAt: string;
 };
@@ -72,7 +112,11 @@ export enum UserStatus {
     DISABLED = "DISABLED",
 }
 
-export enum DocumentType {
+export type UserStatusType = "ACTIVE" | "DISABLED";
+export type ProjectType = "FRONTEND" | "BACKEND";
+export type DocumentType = "CONFIDENTIAL" | "INTERNAL" | "SECRET" | "PUBLIC";
+
+export enum DocumentTypeEnum {
     CONFIDENTIAL = "CONFIDENTIAL",
     INTERNAL = "INTERNAL",
     SECRET = "SECRET",
