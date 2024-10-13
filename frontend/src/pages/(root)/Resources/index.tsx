@@ -7,12 +7,12 @@ import Documents from "./components/documents";
 import { useAppAbility } from "@/context/ability-context";
 export default function Resources() {
     const ability = useAppAbility();
-    const canViewUsers = ability.can("read", "User");
+    const canViewProject = ability.can("read", "Project");
     const canViewArticles = ability.can("read", "Article");
     const canViewDocuments = ability.can("read", "Document");
 
     const initialValue = () => {
-        if (canViewUsers) return "1";
+        if (canViewProject) return "1";
         if (canViewArticles) return "2";
         if (canViewDocuments) return "3";
         return "1";
@@ -20,7 +20,7 @@ export default function Resources() {
 
     const [value, setValue] = useState(initialValue);
 
-    if (!canViewUsers && !canViewArticles && !canViewDocuments) {
+    if (!canViewProject && !canViewArticles && !canViewDocuments) {
         return null;
     }
 
@@ -44,7 +44,9 @@ export default function Resources() {
                         <TabList
                             aria-label="resource-tabs"
                             onChange={handleTabChange}>
-                            {canViewUsers && <Tab label="Projects" value="1" />}
+                            {canViewProject && (
+                                <Tab label="Projects" value="1" />
+                            )}
                             {canViewArticles && (
                                 <Tab label="Articles" value="2" />
                             )}
@@ -53,7 +55,7 @@ export default function Resources() {
                             )}
                         </TabList>
                     </Box>
-                    {canViewUsers && (
+                    {canViewProject && (
                         <TabPanel value="1">
                             <Projects />
                         </TabPanel>
